@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import * as values from './subfolder/subsubfolder/value';
+
+console.log(values);
+
 interface AppProps {}
 
 function App({}: AppProps) {

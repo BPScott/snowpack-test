@@ -1,25 +1,52 @@
-# New Project
+# Bare relative imports
 
-> ✨ Bootstrapped with Create Snowpack App (CSA).
+Snowpack 3.0.12 and 3.1.0-pre.11 fail when importing from `.` and `..` as they are not transformed to full filenames.
 
-## Available Scripts
+Importing from `./` and `../` both work as expected - transforming to './index.js' and '../index.js'.
 
-### npm start
+I would expect the following two code samples to produce identical compiled code:
 
-Runs the app in the development mode.
-Open http://localhost:8080 to view it in the browser.
+```
+import {BLAH} from '.';
+import {BLAH} from '..';
+```
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+and 
 
-### npm run build
+```
+import {BLAH} from './';
+import {BLAH} from '../';
+```
 
-Builds a static copy of your site to the `build/` folder.
-Your app is ready to be deployed!
 
-**For the best production performance:** Add a build bundler plugin like "@snowpack/plugin-webpack" to your `snowpack.config.js` config file.
+### To test
 
-### npm test
+Open this folder and `npm install` and run `npm start`
 
-Launches the application test runner.
-Run with the `--watch` flag (`npm test -- --watch`) to run in interactive watch mode.
+Note that the page fails to load because iit can't resolve module specifers.
+
+Note that http://localhost:8080/dist/subfolder/subsubfolder/value.js contains the following code, containing untransformed paths
+
+```
+import {value as value1} from ".";
+import {value as value2} from "./index.js";
+import {value as value3} from "..";
+import {value as value4} from "../index.js";
+export {value1, value2, value3, value4};
+```
+
+### Expected result
+
+Importing '.' works in the same manner as importing './'
+
+Importing '..' works in the same manner as importing '../'
+
+And thus the optput of value.js should be
+
+```
+import {value as value1} from "./index.js";
+import {value as value2} from "./index.js";
+import {value as value3} from "../index.js";
+import {value as value4} from "../index.js";
+export {value1, value2, value3, value4};
+```
