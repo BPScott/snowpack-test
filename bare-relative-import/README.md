@@ -18,14 +18,17 @@ import {BLAH} from './';
 import {BLAH} from '../';
 ```
 
+In 3.1.0-pre.11 this is particularly confusing as the error mentions an unrelated file:
+
+> Error: Package(s) failed to build: Cannot find module '..' from '/Users/ben/src/github.com/BPScott/snowpack-test/bare-relative-import/package.json' 
 
 ### To test
 
 Open this folder and `npm install` and run `npm start`
 
-Note that the page fails to load because iit can't resolve module specifers.
+Note that the page fails to load because it can't resolve module specifers.
 
-Note that http://localhost:8080/dist/subfolder/subsubfolder/value.js contains the following code, containing untransformed paths
+In v3.0.13 http://localhost:8080/dist/subfolder/subsubfolder/value.js contains the following code, containing untransformed paths
 
 ```
 import {value as value1} from ".";
@@ -34,6 +37,8 @@ import {value as value3} from "..";
 import {value as value4} from "../index.js";
 export {value1, value2, value3, value4};
 ```
+
+In v3.1.0-pre.11  http://localhost:8080/dist/subfolder/subsubfolder/value.js throws a 500 error, refusing to compile as it fails to resolve the paths.
 
 ### Expected result
 
@@ -48,5 +53,5 @@ import {value as value1} from "./index.js";
 import {value as value2} from "./index.js";
 import {value as value3} from "../index.js";
 import {value as value4} from "../index.js";
-export {value1, value2, value3, value4};
+export {value1, value2, value3, value4};  
 ```
