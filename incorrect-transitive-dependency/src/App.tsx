@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// uuid should be v8.3.2, from our package.json
+import {v4 as base} from 'uuid';
+//uuidv4 depends upon uuid@^3.4.0, so when compiling it should pull in that
+// version which will allow it access to the uuid/v4 entrypoint, which is not
+// available in uuid v8
+import alt from 'uuidv4';
+
+console.log(base);
+console.log(alt);
+
 interface AppProps {}
 
 function App({}: AppProps) {
