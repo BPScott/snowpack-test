@@ -8,6 +8,7 @@ module.exports = {
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-dotenv',
     '@snowpack/plugin-typescript',
+    './plugin-fix-broken-modules.js'
   ],
   routes: [
     /* Enable an SPA Fallback in development: */

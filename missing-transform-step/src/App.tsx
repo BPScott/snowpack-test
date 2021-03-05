@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// This doesn't do anything useful other than show that transform gets triggered
+// for other packages from node_modules
+import {showPage} from '@shopify/react-html';
+
+import {withCookies} from 'react-cookie';
+
+console.log(showPage);
+
+console.log(withCookies);
+
 interface AppProps {}
 
 function App({}: AppProps) {
